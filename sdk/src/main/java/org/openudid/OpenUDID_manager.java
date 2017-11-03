@@ -59,7 +59,8 @@ public class OpenUDID_manager implements ServiceConnection{
 				if (_openUDID != null) { //if valid OpenUDID, save it
 					if (LOG) Log.d(TAG, "Received " + _openUDID);
 
-					if (mReceivedOpenUDIDs.containsKey(_openUDID)) mReceivedOpenUDIDs.put(_openUDID, mReceivedOpenUDIDs.get(_openUDID) + 1);
+					if (mReceivedOpenUDIDs.containsKey(_openUDID))
+						mReceivedOpenUDIDs.put(_openUDID, mReceivedOpenUDIDs.get(_openUDID) + 1);
 					else mReceivedOpenUDIDs.put(_openUDID, 1);
 						
 				}

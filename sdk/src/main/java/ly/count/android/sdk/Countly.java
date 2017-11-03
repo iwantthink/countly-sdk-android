@@ -75,7 +75,7 @@ public class Countly {
     /**
      * How often onTimer() is called.
      */
-    private static final long TIMER_DELAY_IN_SECONDS = 60;
+    private static final long TIMER_DELAY_IN_SECONDS = 10;
 
     protected static List<String> publicKeyPinCertificates;
     protected static List<String> certificatePinCertificates;
@@ -280,7 +280,6 @@ public class Countly {
         CountlyStarRating.setStarRatingInitConfig(context, starRatingLimit, starRatingTextTitle, starRatingTextMessage, starRatingTextDismiss);
 
         //app crawler check
-        //TODO
         checkIfDeviceIsAppCrawler();
 
         // if we get here and eventQueue_ != null, init is being called again with the same values,

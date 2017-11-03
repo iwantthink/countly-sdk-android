@@ -24,6 +24,10 @@ public class MainActivity extends AppCompatActivity {
 
     }
 
+    public String doSomeThing() {
+        return "a";
+    }
+
     @Override
     public void onStart() {
         super.onStart();
@@ -43,4 +47,6 @@ public class MainActivity extends AppCompatActivity {
     public void btn_seconedactivity(View view) {
         SeconedActivity.start(MainActivity.this);
     }
+
 }
+
