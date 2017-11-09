@@ -28,7 +28,6 @@ import java.util.HashMap;
 
 import static org.mockito.Matchers.anyInt;
 import static org.mockito.Matchers.anyString;
-import static org.mockito.Mockito.*;
 import static org.mockito.Mockito.doNothing;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.spy;
@@ -70,7 +69,7 @@ public class CountlyTests extends AndroidTestCase {
         assertEquals(0, mUninitedCountly.getActivityCount());
         assertEquals(0, mUninitedCountly.getPrevSessionDurationStartTime());
         assertFalse(mUninitedCountly.getDisableUpdateSessionRequests());
-        assertFalse(mUninitedCountly.isLoggingEnabled());
+        assertTrue(mUninitedCountly.isLoggingEnabled());
     }
 
     public void testSharedInstance() {

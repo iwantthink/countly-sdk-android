@@ -155,7 +155,7 @@ public class Countly {
         timerService_.scheduleWithFixedDelay(new Runnable() {
             @Override
             public void run() {
-                onTimer();
+//                onTimer();
             }
         }, TIMER_DELAY_IN_SECONDS, TIMER_DELAY_IN_SECONDS, TimeUnit.SECONDS);
     }
@@ -449,7 +449,7 @@ public class Countly {
         }
 
         CrashDetails.inForeground();
-
+        Log.d(TAG, "autoViewTracker:" + autoViewTracker);
         if (autoViewTracker) {
             recordView(activity.getClass().getName());
         }
@@ -692,6 +692,7 @@ public class Countly {
      * @param viewName String - name of the view
      */
     public synchronized Countly recordView(String viewName) {
+        Log.d(TAG, "recordView");
         reportViewDuration();
         lastView = viewName;
         lastViewStart = Countly.currentTimestamp();
@@ -1056,7 +1057,9 @@ public class Countly {
         //only record view if the view name is not null and if it has a reasonable duration
         //if the lastViewStart is equal to 0, the duration would be set to the current timestamp
         //and therefore will be ignored
+        Log.d(TAG, "reportViewDuration");
         if (lastView != null && lastViewStart > 0) {
+            Log.d(TAG, "reportViewDuration is processing");
             HashMap<String, String> segments = new HashMap<String, String>();
             segments.put("name", lastView);
             segments.put("dur", String.valueOf(Countly.currentTimestamp() - lastViewStart));

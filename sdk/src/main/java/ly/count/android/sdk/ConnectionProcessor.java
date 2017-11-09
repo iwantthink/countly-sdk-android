@@ -24,9 +24,7 @@ package ly.count.android.sdk;
 import android.os.Build;
 import android.util.Log;
 
-import java.io.BufferedInputStream;
 import java.io.BufferedWriter;
-import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -82,11 +80,13 @@ public class ConnectionProcessor implements Runnable {
         final URL url = new URL(urlStr);
         final HttpURLConnection conn;
         if (Countly.publicKeyPinCertificates == null && Countly.certificatePinCertificates == null) {
+            Log.d("ConnectionProcessor", "http is using");
             conn = (HttpURLConnection)url.openConnection();
         } else {
             HttpsURLConnection c = (HttpsURLConnection)url.openConnection();
             c.setSSLSocketFactory(sslContext_.getSocketFactory());
             conn = c;
+            Log.d("ConnectionProcessor", "https is using");
         }
         conn.setConnectTimeout(CONNECT_TIMEOUT_IN_MILLISECONDS);
         conn.setReadTimeout(READ_TIMEOUT_IN_MILLISECONDS);

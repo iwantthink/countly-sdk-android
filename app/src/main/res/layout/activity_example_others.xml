@@ -18,6 +18,7 @@
     <Button
         android:text="ask for star-rating"
         android:layout_width="match_parent"
+        android:onClick="onClickViewOther02"
         android:layout_height="wrap_content"
         android:id="@+id/button42"/>
 
@@ -25,11 +26,13 @@
         android:text="set new device id"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onClickViewOther03"
         android:id="@+id/button43"/>
 
     <Button
         android:text="set new device id with server merge"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
+        android:onClick="onClickViewOther04"
         android:id="@+id/button44"/>
 </LinearLayout>

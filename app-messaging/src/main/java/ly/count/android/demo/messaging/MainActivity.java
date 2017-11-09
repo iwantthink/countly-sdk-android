@@ -5,15 +5,14 @@ import android.content.BroadcastReceiver;
 import android.content.Context;
 import android.content.Intent;
 import android.content.IntentFilter;
-import android.os.Handler;
 import android.os.Bundle;
+import android.os.Handler;
 import android.util.Log;
 import android.widget.Toast;
 
 import ly.count.android.sdk.Countly;
 import ly.count.android.sdk.messaging.CountlyMessaging;
 import ly.count.android.sdk.messaging.Message;
-import me.leolin.shortcutbadger.ShortcutBadgeException;
 import me.leolin.shortcutbadger.ShortcutBadger;
 
 public class MainActivity extends Activity {
@@ -21,9 +20,9 @@ public class MainActivity extends Activity {
     private BroadcastReceiver messageReceiver;
 
     /** You should use try.count.ly instead of YOUR_SERVER for the line below if you are using Countly trial service */
-    final String COUNTLY_SERVER_URL = "YOUR_SERVER";
-    final String COUNTLY_APP_KEY = "YOUR_APP_KEY";
-    final String COUNTLY_MESSAGING_PROJECT_ID = "YOUR_PROJECT_ID(NUMBERS ONLY)";
+    final String COUNTLY_SERVER_URL = "https://asia-try.count.ly";
+    final String COUNTLY_APP_KEY = "a3a3c83523bcfd981f684dd2988dca79703e0325";
+    final String COUNTLY_MESSAGING_PROJECT_ID = "640228892478";
 
     @Override
     public void onCreate(Bundle savedInstanceState) {

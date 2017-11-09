@@ -53,17 +53,16 @@ import java.util.regex.Pattern;
 /**
  * This class provides several static methods to retrieve information about
  * the current device and operating environment for crash reporting purposes.
- *
  */
 class CrashDetails {
     private static ArrayList<String> logs = new ArrayList<String>();
     private static int startTime = Countly.currentTimestamp();
-    private static Map<String,String> customSegments = null;
+    private static Map<String, String> customSegments = null;
     private static boolean inBackground = true;
     private static long totalMemory = 0;
 
     private static long getTotalRAM() {
-        if(totalMemory == 0) {
+        if (totalMemory == 0) {
             RandomAccessFile reader = null;
             String load = null;
             try {
@@ -79,22 +78,21 @@ class CrashDetails {
                 }
                 try {
                     totalMemory = Long.parseLong(value) / 1024;
-                }catch(NumberFormatException ex){
+                } catch (NumberFormatException ex) {
                     totalMemory = 0;
                 }
             } catch (IOException ex) {
                 try {
-                    if(reader != null) {
+                    if (reader != null) {
                         reader.close();
                     }
                 } catch (IOException exc) {
                     exc.printStackTrace();
                 }
                 ex.printStackTrace();
-            }
-            finally {
+            } finally {
                 try {
-                    if(reader != null) {
+                    if (reader != null) {
                         reader.close();
                     }
                 } catch (IOException exc) {
@@ -139,8 +137,7 @@ class CrashDetails {
     static String getLogs() {
         StringBuilder allLogs = new StringBuilder();
 
-        for (String s : logs)
-        {
+        for (String s : logs) {
             allLogs.append(s + "\n");
         }
         logs.clear();
@@ -151,7 +148,7 @@ class CrashDetails {
      * Adds developer provided custom segments for crash,
      * like versions of dependency libraries.
      */
-    static void setCustomSegments(Map<String,String> segments) {
+    static void setCustomSegments(Map<String, String> segments) {
         customSegments = new HashMap<String, String>();
         customSegments.putAll(segments);
     }
@@ -160,7 +157,7 @@ class CrashDetails {
      * Get custom segments json string
      */
     static JSONObject getCustomSegments() {
-        if(customSegments != null && !customSegments.isEmpty())
+        if (customSegments != null && !customSegments.isEmpty())
             return new JSONObject(customSegments);
         else
             return null;
@@ -179,7 +176,7 @@ class CrashDetails {
      */
     @TargetApi(Build.VERSION_CODES.LOLLIPOP)
     static String getCpu() {
-        if(android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP )
+        if (android.os.Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP)
             return android.os.Build.CPU_ABI;
         else
             return Build.SUPPORTED_ABIS[0];
@@ -228,16 +225,15 @@ class CrashDetails {
      */
     @TargetApi(18)
     static String getDiskCurrent() {
-        if(android.os.Build.VERSION.SDK_INT < 18 ) {
+        if (android.os.Build.VERSION.SDK_INT < 18) {
             StatFs statFs = new StatFs(Environment.getRootDirectory().getAbsolutePath());
-            long   total  = ((long)statFs.getBlockCount() * (long)statFs.getBlockSize());
-            long   free   = ((long)statFs.getAvailableBlocks() * (long)statFs.getBlockSize());
-            return Long.toString((total - free)/ 1048576L);
-        }
-        else{
+            long total = ((long) statFs.getBlockCount() * (long) statFs.getBlockSize());
+            long free = ((long) statFs.getAvailableBlocks() * (long) statFs.getBlockSize());
+            return Long.toString((total - free) / 1048576L);
+        } else {
             StatFs statFs = new StatFs(Environment.getRootDirectory().getAbsolutePath());
-            long   total  = (statFs.getBlockCountLong() * statFs.getBlockSizeLong());
-            long   free   = (statFs.getAvailableBlocksLong() * statFs.getBlockSizeLong());
+            long total = (statFs.getBlockCountLong() * statFs.getBlockSizeLong());
+            long free = (statFs.getAvailableBlocksLong() * statFs.getBlockSizeLong());
             return Long.toString((total - free) / 1048576L);
         }
     }
@@ -247,15 +243,14 @@ class CrashDetails {
      */
     @TargetApi(18)
     static String getDiskTotal() {
-        if(android.os.Build.VERSION.SDK_INT < 18 ) {
+        if (android.os.Build.VERSION.SDK_INT < 18) {
             StatFs statFs = new StatFs(Environment.getRootDirectory().getAbsolutePath());
-            long   total  = ((long)statFs.getBlockCount() * (long)statFs.getBlockSize());
-            return Long.toString(total/ 1048576L);
-        }
-        else{
+            long total = ((long) statFs.getBlockCount() * (long) statFs.getBlockSize());
+            return Long.toString(total / 1048576L);
+        } else {
             StatFs statFs = new StatFs(Environment.getRootDirectory().getAbsolutePath());
-            long   total  = (statFs.getBlockCountLong() * statFs.getBlockSizeLong());
-            return Long.toString(total/ 1048576L);
+            long total = (statFs.getBlockCountLong() * statFs.getBlockSizeLong());
+            return Long.toString(total / 1048576L);
         }
     }
 
@@ -265,7 +260,7 @@ class CrashDetails {
     static String getBatteryLevel(Context context) {
         try {
             Intent batteryIntent = context.registerReceiver(null, new IntentFilter(Intent.ACTION_BATTERY_CHANGED));
-            if(batteryIntent != null) {
+            if (batteryIntent != null) {
                 int level = batteryIntent.getIntExtra(BatteryManager.EXTRA_LEVEL, -1);
                 int scale = batteryIntent.getIntExtra(BatteryManager.EXTRA_SCALE, -1);
 
@@ -274,8 +269,7 @@ class CrashDetails {
                     return Float.toString(((float) level / (float) scale) * 100.0f);
                 }
             }
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             if (Countly.sharedInstance().isLoggingEnabled()) {
                 Log.i(Countly.TAG, "Can't get batter level");
             }
@@ -296,9 +290,8 @@ class CrashDetails {
      */
     static String getOrientation(Context context) {
         int orientation = context.getResources().getConfiguration().orientation;
-        switch(orientation)
-        {
-            case  Configuration.ORIENTATION_LANDSCAPE:
+        switch (orientation) {
+            case Configuration.ORIENTATION_LANDSCAPE:
                 return "Landscape";
             case Configuration.ORIENTATION_PORTRAIT:
                 return "Portrait";
@@ -315,8 +308,8 @@ class CrashDetails {
      * Checks if device is rooted.
      */
     static String isRooted() {
-        String[] paths = { "/sbin/su", "/system/bin/su", "/system/xbin/su", "/data/local/xbin/su", "/data/local/bin/su", "/system/sd/xbin/su",
-                "/system/bin/failsafe/su", "/data/local/su" };
+        String[] paths = {"/sbin/su", "/system/bin/su", "/system/xbin/su", "/data/local/xbin/su", "/data/local/bin/su", "/system/sd/xbin/su",
+                "/system/bin/failsafe/su", "/data/local/su"};
         for (String path : paths) {
             if (new File(path).exists()) return "true";
         }
@@ -336,8 +329,7 @@ class CrashDetails {
                 return "true";
             }
             return "false";
-        }
-        catch(Exception e){
+        } catch (Exception e) {
             if (Countly.sharedInstance().isLoggingEnabled()) {
                 Log.w(Countly.TAG, "Got exception determining connectivity", e);
             }
@@ -350,7 +342,7 @@ class CrashDetails {
      */
     static String isMuted(Context context) {
         AudioManager audio = (AudioManager) context.getSystemService(Context.AUDIO_SERVICE);
-        switch( audio.getRingerMode() ){
+        switch (audio.getRingerMode()) {
             case AudioManager.RINGER_MODE_SILENT:
                 return "true";
             case AudioManager.RINGER_MODE_VIBRATE:
@@ -391,7 +383,7 @@ class CrashDetails {
                 "_online", isOnline(context),
                 "_muted", isMuted(context),
                 "_background", isInBackground()
-                );
+        );
 
         try {
             json.put("_custom", getCustomSegments());
@@ -399,7 +391,7 @@ class CrashDetails {
             //no custom segments
         }
         String result = json.toString();
-
+        Log.d("CrashDetails", "crash meg = " + result);
         try {
             result = java.net.URLEncoder.encode(result, "UTF-8");
         } catch (UnsupportedEncodingException ignored) {
@@ -412,10 +404,11 @@ class CrashDetails {
     /**
      * Utility method to fill JSONObject with supplied objects for supplied keys.
      * Fills json only with non-null and non-empty key/value pairs.
-     * @param json JSONObject to fill
+     *
+     * @param json    JSONObject to fill
      * @param objects varargs of this kind: key1, value1, key2, value2, ...
      */
-    static void fillJSONIfValuesNotEmpty(final JSONObject json, final String ... objects) {
+    static void fillJSONIfValuesNotEmpty(final JSONObject json, final String... objects) {
         try {
             if (objects.length > 0 && objects.length % 2 == 0) {
                 for (int i = 0; i < objects.length; i += 2) {

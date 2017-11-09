@@ -346,7 +346,7 @@ public class ConnectionQueue {
                 + "&events=" + events
                 + "&sdk_version=" + Countly.COUNTLY_SDK_VERSION_STRING
                 + "&sdk_name=" + Countly.COUNTLY_SDK_NAME;
-
+        Log.d("ConnectionQueue", "recordEvents  = " + data);
         store_.addConnection(data);
 
         tick();
